@@ -32,7 +32,7 @@ define('DB_CHARSET', 'utf8');
 /** Der collate type sollte nicht geändert werden */
 define('DB_COLLATE', '');
 
-define("PATH_TO_CHILD_THEME", "http://r-bs.dev/wp-content/themes/r-bs");
+define("PATH_TO_CHILD_THEME", "http://r-bs.dev/wp-content/themes/r-bs-theme");
 
 /**#@+
  * Sicherheitsschlüssel

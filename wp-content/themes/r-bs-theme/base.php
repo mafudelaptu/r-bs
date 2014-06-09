@@ -18,7 +18,7 @@
     <div class="wrap container pl0 pr0" role="document">
     <?php echo do_shortcode("[huge_it_slider id='1']"); ?>
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-8" id="full_left_content">
           <div class="row">
             <div class="col-sm-12  pl0 ml15 mr-15 mt1" id="prim_navi">
               <nav class="nav-main" role="navigation">
@@ -37,7 +37,7 @@
 
         </div>
         <?php if (roots_display_sidebar()) : ?>
-        <div class=" <?php echo roots_sidebar_class(); ?>">
+        <div id="full_right_content" class=" <?php echo roots_sidebar_class(); ?>">
           <aside class="sidebar pl0 mt1" role="complementary">
             <?php include roots_sidebar_path(); ?>
           </aside><!-- /.sidebar -->

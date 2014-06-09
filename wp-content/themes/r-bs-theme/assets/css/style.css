@@ -3,7 +3,7 @@
    ========================================================================== */
 
    body{
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 30px;
     font-family: 'Droid Sans', sans-serif;
     height: 100%;
@@ -41,15 +41,17 @@
    Header
    ========================================================================== */
 
-   #mqtranslate-2-chooser{
+   .widget_mqtranslate > ul{
     list-style: none;
     padding-left: 0;
   }
-  #mqtranslate-2-chooser li{
+  .widget_mqtranslate li{
     display: inline-block;
     padding:0 10px 0 0;
   }
-
+  header ul{
+    margin-bottom: 3px;
+  }
 /* 
    Top-Navi
    ========================================================================== */
@@ -62,7 +64,7 @@
   }
 
   #prim_navi{
-    background-color: #37388D;
+    background-color: #2B3C8E;
   }
 
   #menu-sidebar-menu{
@@ -98,6 +100,14 @@
   .nav_menu-2{
     border-left: 1px solid white;
   }
+  /* 
+     Slider
+     ========================================================================== */
+  .huge_it_slideshow_dots_container_1{
+    display: none !important;
+  }
+  
+  
 /* ==========================================================================
    Sidebar
    ========================================================================== */
@@ -135,11 +145,16 @@
      Footer
      ========================================================================== */
   footer{
-    background-color: #36378b;
+    background-color: #2B3C8E;
     color: white;
     font-size: 10px;
     line-height: 33px;
   }
 
+#footer_ecke{
+  position: absolute;
+  margin-top: -78px;
+  right: -22px;
+}
   
   
