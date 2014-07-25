@@ -9,7 +9,7 @@
     height: 100%;
   }
   h1, h2, h3{
-    color: #33b6ed;
+    color: #4A6A8F;
   }
 
   h1{
@@ -17,11 +17,12 @@
     font-weight: normal;
     margin-bottom: 10px;
     text-transform: uppercase;
+    font-weight: bold;
   }
   a:link,
   a:visited,
   a:focus{
-    color:#33b6ed;
+    color:#7EAECC;
   }
 
   .wrap.container{
@@ -32,10 +33,11 @@
 
   .content{
     padding: 20px 40px 40px 45px;
+    min-height: 400px;
   }
 
   aside{
-    background-color: #cfecf9;
+    background-color: #BFD8E6;
   }
 /* ==========================================================================
    Header
@@ -64,11 +66,11 @@
   }
 
   #prim_navi{
-    background-color: #2B3C8E;
+    background-color: #4A6A8F;
   }
 
   #menu-sidebar-menu{
-    background-color: #4AA0E8;
+    background-color: #7EAECC;
   }
 
   #menu-primaere-navigation li, #menu-sidebar-menu li{
@@ -90,12 +92,12 @@
   #menu-primaere-navigation li > a:hover,
   #menu-primaere-navigation li.active > a 
   {
-    color: #4aa0e8;
+    color: #7EAECC;
   }
 
   #menu-sidebar-menu li>a:hover, 
   #menu-sidebar-menu li.active >a{
-    color:#37388d;
+    color:#4A6A8F;
   }
   .nav_menu-2{
     border-left: 1px solid white;
@@ -145,7 +147,7 @@
      Footer
      ========================================================================== */
   footer{
-    background-color: #2B3C8E;
+    background-color: #4A6A8F;
     color: white;
     font-size: 10px;
     line-height: 33px;
