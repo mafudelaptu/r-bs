@@ -4,79 +4,27 @@
 Plugin Name: Huge IT slider
 Plugin URI: http://huge-it.com/slider
 Description: Huge IT slider is a convenient tool for organizing the images represented on your website into sliders. Each product on the slider is assigned with a relevant slider, which makes it easier for the customers to search and identify the needed images within the slider.
-Version: 2.4.6
+Version: 2.5.1
 Author: http://huge-it.com/
 License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-
-
-/*ADDING to HEADER */
-
-function hugeit_slider_header() {
-    if ( is_admin() ) {
-		wp_enqueue_script("jquery_old", "http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js", FALSE);
-		wp_enqueue_script("jquery_ui", "http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css", FALSE);
-		wp_enqueue_script("jquery_new", "http://code.jquery.com/jquery-1.10.2.js", FALSE);
-		wp_enqueue_script("jquery_ui_new", "http://code.jquery.com/ui/1.10.4/jquery-ui.js", FALSE);
-		
-		wp_enqueue_script("simple_slider_js",  plugins_url("js/simple-slider.js", __FILE__), FALSE);
-		wp_enqueue_style("simple_slider_css", plugins_url("style/simple-slider.css", __FILE__), FALSE);
-		
-		wp_enqueue_style("admin_css", plugins_url("style/admin.style.css", __FILE__), FALSE);
-		wp_enqueue_script("admin_js", plugins_url("js/admin.js", __FILE__), FALSE);
-	}
-}
-add_action('admin_init', 'hugeit_slider_header');
-
-
 add_action('media_buttons_context', 'add_my_custom_button');
-add_action('admin_footer', 'add_inline_popup_content');
+
 function add_my_custom_button($context) {
+  
   $img = plugins_url( '/images/post.button.png' , __FILE__ );
   $container_id = 'huge_it_slider';
+
   $title = 'Select Huge IT Slider to insert into post';
-  $context .= '<a class="button thickbox" title="Select slider to insert into post"    href="#TB_inline?width=400&inlineId='.$container_id.'">
+
+  $context .= '<a class="button thickbox" title="Select slider to insert into post"    href="?page=sliders_huge_it_slider&task=add_shortcode_post&TB_iframe=1&width=400&inlineId='.$container_id.'">
 		<span class="wp-media-buttons-icon" style="background: url('.$img.'); background-repeat: no-repeat; background-position: left bottom;"></span>
 	Add Slider
 	</a>';
+  
   return $context;
 }
-function add_inline_popup_content() {
-?>
-<script type="text/javascript">
-				jQuery(document).ready(function() {
-				  jQuery('#hugeitsliderinsert').on('click', function() {
-				  	var id = jQuery('#huge_it_slider-select option:selected').val();
-			
-				  	window.send_to_editor('[huge_it_slider id="' + id + '"]');
-					tb_remove();
-				  })
-				});
-</script>
-<div id="huge_it_slider" style="display:none;">
-  <h3>Select Huge IT Slider to insert into post</h3>
-  <?php 
-  	  global $wpdb;
-	  $query="SELECT * FROM ".$wpdb->prefix."huge_itslider_sliders order by id ASC";
-			   $shortcodesliders=$wpdb->get_results($query);
-			   ?>
- <?php 	if (count($shortcodesliders)) {
-							echo "<select id='huge_it_slider-select'>";
-							foreach ($shortcodesliders as $shortcodeslider) {
-								echo "<option value='".$shortcodeslider->id."'>".$shortcodeslider->name."</option>";
-							}
-							echo "</select>";
-							echo "<button class='button primary' id='hugeitsliderinsert'>Insert Slider</button>";
-						} else {
-							echo "No slideshows found", "huge_it_slider";
-						}
-						?>
-	
-</div>
-<?php
-}
-///////////////////////////////////shortcode update/////////////////////////////////////////////
 
 
 add_action('init', 'hugesl_do_output_buffer');
@@ -178,6 +126,9 @@ function huge_it_cat_ShowTinyMCE()
     do_action("admin_print_styles-post-php");
     do_action('admin_print_styles');
 }
+
+
+
 add_action('admin_menu', 'huge_it_slider_options_panel');
 function huge_it_slider_options_panel()
 {
@@ -186,8 +137,43 @@ function huge_it_slider_options_panel()
     $page_option = add_submenu_page('sliders_huge_it_slider', 'General Options', 'General Options', 'manage_options', 'Options_slider_styles', 'Options_slider_styles');
 	add_submenu_page( 'sliders_huge_it_slider', 'Licensing', 'Licensing', 'manage_options', 'huge_it_slider_Licensing', 'huge_it_slider_Licensing');
 
-    add_action('admin_print_styles-' . $page_option, 'huge_it_option_admin_script');
+   	add_action('admin_print_styles-' . $page_cat, 'huge_it_slider_admin_script');
+    add_action('admin_print_styles-' . $page_option, 'huge_it_slider_option_admin_script');
 }
+
+
+function huge_it_slider_admin_script()
+{
+		//wp_enqueue_script("jquery_old", "http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js", FALSE);
+		wp_enqueue_script("jquery_ui", "http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css", FALSE);
+		wp_enqueue_script("jquery_new", "http://code.jquery.com/jquery-1.10.2.js", FALSE);
+		wp_enqueue_script("jquery_ui_new", "http://code.jquery.com/ui/1.10.4/jquery-ui.js", FALSE);
+		
+		//wp_enqueue_script("simple_slider_js",  plugins_url("js/simple-slider.js", __FILE__), FALSE);
+		//wp_enqueue_style("simple_slider_css", plugins_url("style/simple-slider.css", __FILE__), FALSE);
+		
+		wp_enqueue_style("admin_css", plugins_url("style/admin.style.css", __FILE__), FALSE);
+		wp_enqueue_script("admin_js", plugins_url("js/admin.js", __FILE__), FALSE);
+		wp_enqueue_script('param_block2', plugins_url("elements/jscolor/jscolor.js", __FILE__));
+}
+
+function huge_it_slider_option_admin_script()
+{
+		wp_enqueue_script("jquery_old", "http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js", FALSE);
+		//wp_enqueue_script("jquery_ui", "http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css", FALSE);
+		//wp_enqueue_script("jquery_new", "http://code.jquery.com/jquery-1.10.2.js", FALSE);
+		//wp_enqueue_script("jquery_ui_new", "http://code.jquery.com/ui/1.10.4/jquery-ui.js", FALSE);
+		
+		wp_enqueue_script("simple_slider_js",  plugins_url("js/simple-slider.js", __FILE__), FALSE);
+		wp_enqueue_style("simple_slider_css", plugins_url("style/simple-slider.css", __FILE__), FALSE);
+		
+		wp_enqueue_style("admin_css", plugins_url("style/admin.style.css", __FILE__), FALSE);
+		wp_enqueue_script("admin_js", plugins_url("js/admin.js", __FILE__), FALSE);
+		wp_enqueue_script('param_block2', plugins_url("elements/jscolor/jscolor.js", __FILE__));
+}
+
+
+
 function huge_it_slider_Licensing(){
 
 	?>
@@ -232,6 +218,9 @@ function sliders_huge_it_slider()
         case 'add_cat':
             add_slider();
             break;
+		case 'add_shortcode_post':
+            add_shortcode_post();
+            break;
 		case 'popup_posts':
             if ($id)
                 popup_posts($id);
@@ -266,6 +255,152 @@ function sliders_huge_it_slider()
             break;
     }
 }
+
+function add_shortcode_post()
+{
+	?>
+<script type="text/javascript">
+				jQuery(document).ready(function() {
+				  jQuery('#hugeitsliderinsert').on('click', function() {
+					jQuery('#save-buttom').click();
+					var id = jQuery('#huge_it_slider-select option:selected').val();
+					if(window.parent.tinyMCE && window.parent.tinyMCE.activeEditor)
+					{
+						window.parent.send_to_editor('[huge_it_slider id="'+id+'"]');
+					}
+					tb_remove();
+				  })
+				});
+</script>
+<style>
+#wpadminbar {
+	display: none;
+}
+#wpcontent {
+	margin-top: -55px;
+}
+
+.wp-core-ui .button {margin:0px 0px 0px 10px !important;}
+
+#slider-unique-options-list li {
+	clear:both;
+	margin:10px 0px 5px 0px;
+}
+
+#slider-unique-options-list li label {width:130px;}
+
+#save-buttom {display:none;}
+</style>
+<h3>Select the slider</h3>
+<div id="huge_it_slider">
+  <?php 
+  	  global $wpdb;
+	  $query="SELECT * FROM ".$wpdb->prefix."huge_itslider_sliders";
+	  $firstrow=$wpdb->get_row($query);
+	  if(isset($_POST["hugeit_slider_id"])){
+	  $id=$_POST["hugeit_slider_id"];
+	  }
+	  else{
+	  $id=$firstrow->id;
+	  }
+	  if($_GET["htslider_id"] == $_POST["hugeit_slider_id"]){
+	  if($_GET["hugeit_save"]==1){
+			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET  sl_width = '".$_POST["sl_width"]."'  WHERE id = '".$id."' ");
+			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET  sl_height = '".$_POST["sl_height"]."'  WHERE id = '".$id."' ");
+			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET  pause_on_hover = '".$_POST["pause_on_hover"]."'  WHERE id = '".$id."' ");
+			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET  slider_list_effects_s = '".$_POST["slider_effects_list"]."'  WHERE id = '".$id."' ");
+			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET  description = '".$_POST["sl_pausetime"]."'  WHERE id = '".$id."' ");
+			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET  param = '".$_POST["sl_changespeed"]."'  WHERE id = '".$id."' ");
+			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET  sl_position = '".$_POST["sl_position"]."'  WHERE id = '".$id."' ");
+		}
+		}
+	  $query="SELECT * FROM ".$wpdb->prefix."huge_itslider_sliders order by id ASC";
+			   $shortcodesliders=$wpdb->get_results($query);
+		$query=$wpdb->prepare("SELECT * FROM ".$wpdb->prefix."huge_itslider_sliders WHERE id= %d", $id);
+	   $row=$wpdb->get_row($query);
+			   ?>
+<form action="?page=sliders_huge_it_slider&task=add_shortcode_post&TB_iframe=1&width=400&inlineId=<?php echo $container_id; ?>&hugeit_save=1&htslider_id=<?php echo $id; ?>" method="post" name="adminForm" id="adminForm">
+ <?php 	if (count($shortcodesliders)) {
+							echo "<select id='huge_it_slider-select' onchange='this.form.submit()' name='hugeit_slider_id'>";
+							foreach ($shortcodesliders as $shortcodeslider) {
+								$selected='';
+								if($shortcodeslider->id == $_POST["hugeit_slider_id"]){$selected='selected="selected"';} 
+								echo "<option ".$selected." value='".$shortcodeslider->id."'>".$shortcodeslider->name."</option>";
+							}
+							echo "</select>";
+							echo "<button class='button primary' id='hugeitsliderinsert'>Insert Slider</button>";
+						} else {
+							echo "No slideshows found", "huge_it_slider";
+						}
+						$container_id = 'huge_it_slider';
+						?>
+	
+</div>
+			
+				<div id="" class="meta-box-sortables ui-sortable">
+					<div id="slider-unique-options" class="">
+					<h3 class="hndle"><span>Current Slider Options</span></h3>
+					<ul id="slider-unique-options-list">
+						<li>
+							<label for="sl_width">Width</label>
+							<input type="text" name="sl_width" id="sl_width" value="<?php echo $row->sl_width; ?>" class="text_area" />
+						</li>
+						<li>
+							<label for="sl_height">Height</label>
+							<input type="text" name="sl_height" id="sl_height" value="<?php echo $row->sl_height; ?>" class="text_area" />
+						</li>
+						<li>
+							<label for="pause_on_hover">Pause on hover</label>
+							<input type="hidden" value="off" name="pause_on_hover" />					
+							<input type="checkbox" name="pause_on_hover"  value="on" id="pause_on_hover"  <?php if($row->pause_on_hover  == 'on'){ echo 'checked="checked"'; } ?> />
+						</li>
+						<li>
+							<label for="slider_effects_list">Effects</label>
+							<select name="slider_effects_list" id="slider_effects_list">
+									<option <?php if($row->slider_list_effects_s == 'none'){ echo 'selected'; } ?>  value="none">None</option>
+									<option <?php if($row->slider_list_effects_s == 'cubeH'){ echo 'selected'; } ?>   value="cubeH">Cube Horizontal</option>
+									<option <?php if($row->slider_list_effects_s == 'cubeV'){ echo 'selected'; } ?>  value="cubeV">Cube Vertical</option>
+									<option <?php if($row->slider_list_effects_s == 'fade'){ echo 'selected'; } ?>  value="fade">Fade</option>
+									<option <?php if($row->slider_list_effects_s == 'sliceH'){ echo 'selected'; } ?>  value="sliceH">Slice Horizontal</option>
+									<option <?php if($row->slider_list_effects_s == 'sliceV'){ echo 'selected'; } ?>  value="sliceV">Slice Vertical</option>
+									<option <?php if($row->slider_list_effects_s == 'slideH'){ echo 'selected'; } ?>  value="slideH">Slide Horizontal</option>
+									<option <?php if($row->slider_list_effects_s == 'slideV'){ echo 'selected'; } ?>  value="slideV">Slide Vertical</option>
+									<option <?php if($row->slider_list_effects_s == 'scaleOut'){ echo 'selected'; } ?>  value="scaleOut">Scale Out</option>
+									<option <?php if($row->slider_list_effects_s == 'scaleIn'){ echo 'selected'; } ?>  value="scaleIn">Scale In</option>
+									<option <?php if($row->slider_list_effects_s == 'blockScale'){ echo 'selected'; } ?>  value="blockScale">Block Scale</option>
+									<option <?php if($row->slider_list_effects_s == 'kaleidoscope'){ echo 'selected'; } ?>  value="kaleidoscope">Kaleidoscope</option>
+									<option <?php if($row->slider_list_effects_s == 'fan'){ echo 'selected'; } ?>  value="fan">Fan</option>
+									<option <?php if($row->slider_list_effects_s == 'blindH'){ echo 'selected'; } ?>  value="blindH">Blind Horizontal</option>
+									<option <?php if($row->slider_list_effects_s == 'blindV'){ echo 'selected'; } ?>  value="blindV">Blind Vertical</option>
+									<option <?php if($row->slider_list_effects_s == 'random'){ echo 'selected'; } ?>  value="random">Random</option>
+							</select>
+						</li>
+
+						<li>
+							<label for="sl_pausetime">Pause time</label>
+							<input type="text" name="sl_pausetime" id="sl_pausetime" value="<?php echo $row->description; ?>" class="text_area" />
+						</li>
+						<li>
+							<label for="sl_changespeed">Change speed</label>
+							<input type="text" name="sl_changespeed" id="sl_changespeed" value="<?php echo $row->param; ?>" class="text_area" />
+						</li>
+						<li>
+							<label for="slider_position">Slider Position</label>
+							<select name="sl_position" id="slider_position">
+									<option <?php if($row->sl_position == 'left'){ echo 'selected'; } ?>  value="left">Left</option>
+									<option <?php if($row->sl_position == 'right'){ echo 'selected'; } ?>   value="right">Right</option>
+									<option <?php if($row->sl_position == 'center'){ echo 'selected'; } ?>  value="center">Center</option>
+							</select>
+						</li>
+
+					</ul>
+					<input type="submit" value="Save Slider" id="save-buttom" class="button button-primary button-large">
+					</div>
+				</div>
+			</form>
+<?php
+}
+
 function Options_slider_styles()
 {
     require_once("slider_Options.php");
@@ -469,7 +604,7 @@ INSERT INTO `$table_name` (`id`, `name`, `sl_height`, `sl_width`, `pause_on_hove
         }
     }
 	if ($isUpdate) {
-	$wpdb->query("ALTER TABLE `wp_huge_itslider_sliders` MODIFY `published` text");
+	$wpdb->query("ALTER TABLE `".$wpdb->prefix."huge_itslider_sliders` MODIFY `published` text");
 	$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET published = '300' WHERE id = 1 ");
 	}
 	
@@ -496,9 +631,9 @@ INSERT INTO `$table_name` (`id`, `name`, `sl_height`, `sl_width`, `pause_on_hove
 			}
 			else
 			{
-			$wpdb->query("ALTER TABLE  `wp_huge_itslider_images` ADD  `sl_type` TEXT NOT NULL AFTER  `sl_url`");
+			$wpdb->query("ALTER TABLE  `".$wpdb->prefix."huge_itslider_images` ADD  `sl_type` TEXT NOT NULL AFTER  `sl_url`");
 			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_images SET sl_type = 'image' ");
-			$wpdb->query("ALTER TABLE  `wp_huge_itslider_images` ADD  `link_target` TEXT NOT NULL AFTER  `sl_type`");
+			$wpdb->query("ALTER TABLE  `".$wpdb->prefix."huge_itslider_images` ADD  `link_target` TEXT NOT NULL AFTER  `sl_type`");
 			$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_images SET link_target = 'on' ");
 
 		    $table_name = $wpdb->prefix . "huge_itslider_params";
@@ -522,7 +657,7 @@ query1;
 	}
 	else
 	{
-	$wpdb->query("ALTER TABLE  `wp_huge_itslider_sliders` ADD  `sl_position` TEXT NOT NULL AFTER  `param`");
+	$wpdb->query("ALTER TABLE  `".$wpdb->prefix."huge_itslider_sliders` ADD  `sl_position` TEXT NOT NULL AFTER  `param`");
 	$wpdb->query("UPDATE ".$wpdb->prefix."huge_itslider_sliders SET `sl_position` = 'center' ");
 	$table_name = $wpdb->prefix . "huge_itslider_params";
     $sql_update3 = <<<query1
@@ -534,5 +669,15 @@ INSERT INTO `$table_name` (`name`, `title`,`description`, `value`) VALUES
 query1;
 	 $wpdb->query($sql_update3);
 	}
+		$product4 = $wpdb->get_results("DESCRIBE " . $wpdb->prefix . "huge_itslider_images", ARRAY_A);
+	if($product4[8]['Field'] == 'sl_stitle'){
+		echo '';
+	}
+	else
+	{
+		$wpdb->query("ALTER TABLE  `".$wpdb->prefix."huge_itslider_images` ADD  `sl_stitle` TEXT NOT NULL AFTER  `link_target`");
+		$wpdb->query("ALTER TABLE  `".$wpdb->prefix."huge_itslider_images` ADD  `sl_sdesc` TEXT NOT NULL AFTER  `sl_stitle`");
+		$wpdb->query("ALTER TABLE  `".$wpdb->prefix."huge_itslider_images` ADD  `sl_postlink` TEXT NOT NULL AFTER  `sl_sdesc`");
+	}	
 }
 register_activation_hook(__FILE__, 'huge_it_slider_activate');
