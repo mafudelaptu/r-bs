@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media(min-width: 1201px) {
+	
+}
+
+@media (max-width: 1200px) {
+	#menu-sidebar-menu li>a{
+      padding-left: 0px;
+      padding-right: 10px;
+   }
+}
+
+@media (max-width: 991px) {
+   #menu-sidebar-menu li>a{
+      padding-left: 0px;
+      padding-right: 0px;
+   }
+   .sidebar .menu li{
+      padding-left: 6px;
+   }
+   .sidebar .menu ul{
+      padding-left: 30px;
+   }
+   h2>small{
+      float: left !important;
+      padding-bottom: 10px;
+   }
+   #footer_ecke{
+      display: none;
+   }
+   #footer_ecke_small{
+      display: block;
+   }
+   body{
+      background: none;
+   }
+}
+
+@media (max-width: 768px) {
+
+}
+
+@media (max-width: 680px) {
+	
+}
+
+@media (max-width: 550px) {
+	
+}
+
+@media (max-width: 450px) {
+
+}

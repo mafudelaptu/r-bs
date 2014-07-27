@@ -14,7 +14,9 @@
   h1, h2, h3{
     color: #4A6A8F;
   }
-
+  h2>small{
+    float: right
+  }
   h1{
     font-size: 18px;
     font-weight: normal;
@@ -167,10 +169,14 @@
     line-height: 33px;
   }
 
-#footer_ecke{
+#footer_ecke, #footer_ecke_small{
   position: absolute;
   margin-top: -78px;
   right: -22px;
 }
   
+  #footer_ecke_small{
+    
+  right: -21px;
+  }
   
