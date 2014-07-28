@@ -35,7 +35,16 @@
       display: block;
    }
    body{
-      background: none;
+     /* background: none;*/
+     background-position: 0 155px;
+   }
+    .slider_overlay{
+    background-image: url("../img/slider_welle_small.png");
+    height: 113px;
+    width: 223px;
+   }
+   .brand_logo{
+      width: 108px;
    }
 }
 

@@ -8,7 +8,7 @@
     font-family: 'Droid Sans', sans-serif;
     height: 100%;
     background-image: url("../img/top_blue_bg.gif");
-    background-position: 0px 208px;
+    background-position: 0px 207px;
     background-repeat: repeat-x;
   }
   h1, h2, h3{
@@ -52,7 +52,7 @@
    Header
    ========================================================================== */
    .slider_overlay{
-    background-image: url("../img/slider_welle.gif");
+    background-image: url("../img/slider_welle.png");
     background-repeat: no-repeat;
     height: 165px;
     width: 325px;
