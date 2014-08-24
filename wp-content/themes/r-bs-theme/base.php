@@ -15,11 +15,11 @@
     
     ?>
       
-    <div class="wrap container pl0 pr0" role="document">
+    <div class="wrap container pl0 pr0" role="document" id="wrapper">
     
       <div class="row">
         <div class="col-sm-8" id="full_left_content">
-          <div class="row ">
+          <div class="row">
             <div class="col-sm-12  pl0 ml15 mr-15 mt1" id="prim_navi">
               <nav class="nav-main" role="navigation">
                 <?php

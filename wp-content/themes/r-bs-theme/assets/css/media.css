@@ -7,26 +7,28 @@
 }
 
 @media (max-width: 1200px) {
-	#menu-sidebar-menu li>a{
+	aside.sidebar > section.widget.widget_nav_menu:first-child > ul.menu li>a{
       padding-left: 0px;
       padding-right: 10px;
    }
 }
 
 @media (max-width: 991px) {
-   #menu-sidebar-menu li>a{
+   aside.sidebar > section.widget.widget_nav_menu:first-child > ul.menu li>a{
       padding-left: 0px;
       padding-right: 0px;
    }
-   .sidebar .menu li{
+   .sidebar .menu:first-child li{
       padding-left: 6px;
    }
    .sidebar .menu ul{
       padding-left: 30px;
    }
    h2>small{
-      float: left !important;
-      padding-bottom: 10px;
+      float: none !important;
+      padding-bottom: 0;
+      display: block;
+      font-size: 12px;
    }
    #footer_ecke{
       display: none;
@@ -49,7 +51,39 @@
 }
 
 @media (max-width: 768px) {
+  .widget.widget_recent_entries ul{
+    margin-bottom: 0;
+  }
+  #mobile_nav, #full_right_content_mobile{
+    display: block;
+  }
+  body{
+    margin-top: 0;
+    margin-bottom: 0;
+    background-image: none;
+  }
 
+  .slider_overlay, #lang_select, #prim_navi, #full_right_content, #footer_ecke_small{
+    display: none;
+  }
+  .content{
+    padding: 0;
+  }
+  #full_left_content{
+    padding-right: 0;
+  }
+  #wrapper > .row{
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  #wrapper{
+    background-image: none;
+    padding-right: 15px;
+  }
+  h2{
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -57,9 +91,36 @@
 }
 
 @media (max-width: 550px) {
-	
+	.navbar-brand{
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 450px) {
+  .navbar-brand{
+    font-size: 14px;
+  }
+}
 
+@media (max-width: 400px) {
+  .navbar-brand > span{
+    display: none;
+  }
+}
+
+/* 
+   Bootstrap toggle menu overlay fix
+   ========================================================================== */
+
+
+
+@media (max-width: 979px) {
+  .navbar-fixed-top.navbar-absolute {
+    position: absolute;
+    margin: 0;
+  }
+}
+
+.navbar-absolute + div {
+    margin-top: 68px;
 }
